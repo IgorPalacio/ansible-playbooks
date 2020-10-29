@@ -1,0 +1,70 @@
+
+PLAY [docker] ********************************************************************************************************************
+
+TASK [Gathering Facts] ***********************************************************************************************************
+ok: [192.168.0.10]
+
+TASK [postgres databse] **********************************************************************************************************
+changed: [192.168.0.10]
+
+PLAY [docker nginx] **************************************************************************************************************
+
+TASK [Gathering Facts] ***********************************************************************************************************
+ok: [192.168.0.11]
+ok: [192.168.0.12]
+ok: [192.168.0.13]
+
+TASK [nginx app] *****************************************************************************************************************
+ok: [192.168.0.13]
+ok: [192.168.0.12]
+ok: [192.168.0.11]
+
+PLAY [Listar containers] *********************************************************************************************************
+
+TASK [Gathering Facts] ***********************************************************************************************************
+ok: [192.168.0.13]
+ok: [192.168.0.10]
+ok: [192.168.0.11]
+ok: [192.168.0.12]
+
+TASK [list] **********************************************************************************************************************
+changed: [192.168.0.10]
+changed: [192.168.0.11]
+changed: [192.168.0.13]
+changed: [192.168.0.12]
+
+TASK [debug] *********************************************************************************************************************
+ok: [192.168.0.10] => {
+    "out.stdout_lines": [
+        "CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                  NAMES",
+        "6388b4fda97f        nginx:latest        \"/docker-entrypoint.…\"   32 minutes ago      Up 32 minutes       0.0.0.0:8080->80/tcp   nginx-server"
+    ]
+}
+ok: [192.168.0.13] => {
+    "out.stdout_lines": [
+        "CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                  NAMES",
+        "6f2e75f4a6f1        ubuntu:14.04        \"sleep infinity\"         21 seconds ago      Up 19 seconds                              ubuntu-container",
+        "c9cabaff5287        nginx:latest        \"/docker-entrypoint.…\"   11 minutes ago      Up 11 minutes       0.0.0.0:8081->80/tcp   nginx-container"
+    ]
+}
+ok: [192.168.0.12] => {
+    "out.stdout_lines": [
+        "CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                  NAMES",
+        "5351fe2b530e        ubuntu:14.04        \"sleep infinity\"         21 seconds ago      Up 20 seconds                              ubuntu-container",
+        "0a3f13b5c0fb        nginx:latest        \"/docker-entrypoint.…\"   11 minutes ago      Up 11 minutes       0.0.0.0:8081->80/tcp   nginx-container"
+    ]
+}
+ok: [192.168.0.11] => {
+    "out.stdout_lines": [
+        "CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                  NAMES",
+        "2d2cd65e6f2e        ubuntu:14.04        \"sleep infinity\"         20 seconds ago      Up 19 seconds                              ubuntu-container",
+        "e8486b6dc702        nginx:latest        \"/docker-entrypoint.…\"   11 minutes ago      Up 11 minutes       0.0.0.0:8081->80/tcp   nginx-container"
+    ]
+}
+
+PLAY RECAP ***********************************************************************************************************************
+192.168.0.10               : ok=5    changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+192.168.0.11               : ok=5    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+192.168.0.12               : ok=5    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+192.168.0.13               : ok=5    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
