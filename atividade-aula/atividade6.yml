@@ -1,0 +1,17 @@
+---
+- name: Ips com command
+  hosts: VMS
+
+  tasks:
+    - command: ifconfig
+      register: out
+
+    - debug:
+        msg: "{{ out.stdout_lines[1] }}"
+
+- name: Ips com facts
+  hosts: VMS
+
+  tasks:
+    - debug:
+        msg: "{{ ansible_all_ipv4_addresses }}"

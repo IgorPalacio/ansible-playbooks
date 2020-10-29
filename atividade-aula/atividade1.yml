@@ -1,0 +1,10 @@
+---
+- name: Atualizar caches
+  hosts: VMS
+ 
+  tasks:
+    - apk: update_cache=yes
+      when: ansible_os_family == "Alpine"
+   
+    - apt: update_cache=yes
+      when: ansible_os_family == "Debian"
